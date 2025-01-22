@@ -3,7 +3,7 @@ import { Schema, model, type Document } from 'mongoose';
 interface IScore extends Document {
     userId: Schema.Types.ObjectId;
     score: number;
-    category?: string;
+    category: string;
     difficulty?: string;
     createdAt?: Date;
     updatedAt?: Date;

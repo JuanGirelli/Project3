@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { User } from '../models/index.js';
+import { User, Score } from '../models/index.js';
 
 // Create a new user
 export const createUser = async (req: Request, res: Response) => {
@@ -27,7 +27,11 @@ export const getUsers = async (_req: Request, res: Response) => {
 export const deleteUser = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
+
+        await Score.deleteMany({ userId: id });
+
         const result = await User.findByIdAndDelete(id);
+
         if (result) {
             res.status(200).json({ message: 'User deleted' });
         } else {
