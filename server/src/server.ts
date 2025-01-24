@@ -1,6 +1,7 @@
 import express from 'express';
 import routes from './routes/index.js';
 import db from './config/connection.js';
+import seedDatabase from './utils/seed.js';
 
 await db();
 
@@ -13,6 +14,10 @@ app.use(express.urlencoded({ extended: true}));
 app.use(express.json());
 
 app.use(routes);
+
+(async () => {
+  await seedDatabase();
+})();
 
 app.listen(PORT, () => {
   console.log(`API server running on port ${PORT}!`);
