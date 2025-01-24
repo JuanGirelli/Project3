@@ -8,6 +8,13 @@ import {
 } from '../../controllers/userController.js';
 
 // POST /api/users
+/*
+{
+    "username": "testUsername",
+    "password": "testPassword",
+    "email": "test@email.com"
+}
+*/
 router.route('/').post(createUser);
 
 // GET /api/users

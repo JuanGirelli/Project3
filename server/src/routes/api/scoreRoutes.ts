@@ -8,6 +8,13 @@ import {
 } from '../../controllers/scoreController.js';
 
 // POST /api/scores
+/*
+{
+    "userId": "id",
+    "score": Any #,
+    "category": "String"
+}
+*/
 router.route('/').post(assignHighScoreForCategory);
 
 // GET /api/scores/:userId
