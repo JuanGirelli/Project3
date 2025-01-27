@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { loginUser } from '../api/authAPI';
+import { login } from '../api/authAPI';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -7,9 +7,10 @@ const Login = () => {
   const [message, setMessage] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
+    console.log(username);
     e.preventDefault();
     try {
-      const response = await loginUser({ username, password });
+      const response = await login({ username, password });
       setMessage('Login successful!');
       console.log(response);
     } catch (error) {
