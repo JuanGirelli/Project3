@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { registerUser } from '../api/authAPI';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -27,42 +28,48 @@ const Register = () => {
   };
 
   return (
-    <div>
-      <h1>Register</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Username:
+    <div className="container mt-5">
+      <h1 className="text-center mb-4">Register</h1>
+      <form onSubmit={handleSubmit} className="w-50 mx-auto">
+        <div className="mb-3">
+          <label htmlFor="username" className="form-label">Username:</label>
           <input
             type="text"
+            id="username"
             name="username"
             value={formData.username}
             onChange={handleChange}
+            className="form-control"
             required
           />
-        </label>
-        <label>
-          Email:
+        </div>
+        <div className="mb-3">
+          <label htmlFor="email" className="form-label">Email:</label>
           <input
             type="email"
+            id="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
+            className="form-control"
             required
           />
-        </label>
-        <label>
-          Password:
+        </div>
+        <div className="mb-3">
+          <label htmlFor="password" className="form-label">Password:</label>
           <input
             type="password"
+            id="password"
             name="password"
             value={formData.password}
             onChange={handleChange}
+            className="form-control"
             required
           />
-        </label>
-        <button type="submit">Register</button>
+        </div>
+        <button type="submit" className="btn btn-primary w-100">Register</button>
       </form>
-      {message && <p>{message}</p>}
+      {message && <p className="mt-3 text-center">{message}</p>}
     </div>
   );
 };
