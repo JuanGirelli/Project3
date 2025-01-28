@@ -6,8 +6,7 @@
   "scripts": {
     "build": "npx tsc",
     "start": "npm run build && node dist/server.js --ignore client",
-    "dev": "npx nodemon",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/server.ts",
     "seed": "node dist/seeds/index.js"
   },
   "nodemonConfig": {
@@ -19,9 +18,7 @@
   },
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
-    "@types/bcryptjs": "^2.4.6",
     "@types/express": "^4.17.21",
     "@types/mongoose": "^5.11.96",
     "bcrypt": "^5.1.1",
@@ -33,6 +30,7 @@
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
+    "@types/bcryptjs": "^2.4.6",
     "@types/jsonwebtoken": "^9.0.7"
   }
 }

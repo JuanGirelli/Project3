@@ -4,24 +4,32 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "npm i && npm run seed && npm run build && npm run start:dev",
+    "dev": "npm install && npm run seed && npm run build && npm run start:dev",
     "start": "npm run client:build && npm run server",
-    "start:dev": "concurrently \"npm run server:dev\" \"wait-on tcp:3001 && npm run client:dev\"",
+    "start:dev": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
     "server": "cd server && npm start",
     "server:dev": "cd server && npm run dev",
-    "install": "cd server && npm i && cd ../client && npm i",
+    "install": "cd server && npm install && cd ../client && npm install",
     "client:build": "cd client && npm run build",
     "client:dev": "cd client && npm run dev",
     "build": "cd client && npm run build",
     "seed": "cd server && npm run seed",
-    "render-build": "npm install && npm run build"
+    "render-build": "npm install && npm run build",
+    "dev:client": "cd client && vite",
+    "dev:server": "cd server && nodemon src/server.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "concurrently": "^9.1.2",
+    "@types/react-bootstrap": "^0.32.37",
+    "bootstrap": "^5.3.3",
     "express": "^4.21.2",
+    "react-bootstrap": "^2.10.8",
+    "vite": "^5.4.10"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
     "nodemon": "^3.1.9"
   }
 }
