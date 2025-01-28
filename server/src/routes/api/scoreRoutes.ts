@@ -17,10 +17,10 @@ import {
 */
 router.route('/').post(assignHighScoreForCategory);
 
-// GET /api/scores/:userId
-router.route('/:userId').get(getHighScoresForUser);
+// GET /api/scores
+router.route('/').get(getHighScoresForUser);
 
-// DELETE /api/scores/:userId
-router.route('/:userId').delete(clearHighScoresForUser);
+// DELETE /api/scores
+router.route('/').delete(clearHighScoresForUser);
 
 export { router as scoreRoutes };

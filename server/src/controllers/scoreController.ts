@@ -3,39 +3,41 @@ import { Score } from '../models/index.js';
 
 export const assignHighScoreForCategory = async (req: Request, res: Response) => {
     try {
-        const { userId, score, category} = req.body;
-
-        const existingScore = await Score.findOne({ userId, category });
-
-        if (existingScore) {
-            // If a score exists for the category, compare it with the new score
-            if (score > existingScore.score) {
-                // Update the score if the new one is higher
-                existingScore.score = score;
-                await existingScore.save();
-                res.status(200).json({ message: 'High score updated!', score: existingScore });
-            } else {
-                res.status(200).json({ message: 'Score is lower than existing high score', score: existingScore });
-            }
+      const { score, category } = req.body;
+  
+      // Use the userId from the decoded token
+      const userId = req.user?.userId;
+  
+      if (!userId) {
+        res.status(400).json({ error: 'User ID missing in token' });
+        return;
+      }
+  
+      const existingScore = await Score.findOne({ userId, category });
+  
+      if (existingScore) {
+        if (score > existingScore.score) {
+          existingScore.score = score;
+          await existingScore.save();
+          res.status(200).json({ message: 'High score updated!', score: existingScore });
         } else {
-            // If no existing score for that category, create a new score entry
-            const newScore = new Score({
-                userId,
-                score,
-                category
-            });
-
-            await newScore.save();
-            res.status(201).json({ message: 'New high score created!', score: newScore });
+            res.status(200).json({ message: 'Score is lower than existing high score', score: existingScore });
         }
+      } else {
+        const newScore = new Score({ userId, score, category });
+        await newScore.save();
+        res.status(201).json({ message: 'New high score created!', score: newScore });
+      }
     } catch (error) {
-        res.status(500).json({ error: 'Error assigning score' });
+      res.status(500).json({ error: 'Error assigning score' });
     }
-};
+  };
+  
 
 export const getHighScoresForUser = async (req: Request, res: Response) => {
     try {
-        const { userId } = req.params;  // Extract userId from the URL parameters
+        // Extract userId from req.user (set by authenticateToken middleware)
+        const userId = req.user?.userId;
 
         // Find all scores for the given user
         const userScores = await Score.find({ userId })
