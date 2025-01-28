@@ -1,14 +1,15 @@
 import { Request, Response, NextFunction } from 'express';
+import jwt from 'jsonwebtoken';
 
 declare module 'express-serve-static-core' {
   interface Request {
     user?: JwtPayload;
   }
 }
-import jwt from 'jsonwebtoken';
 
 interface JwtPayload {
   username: string;
+  userId: string;
 }
 
 export const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
@@ -21,12 +22,13 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
 
     jwt.verify(token, secretKey, (err, user) => {
       if (err) {
-        return res.sendStatus(403); // Forbidden
+          console.error('JWT verification error:', err);
+          return res.sendStatus(403); // Forbidden
       }
-
+      console.log('Decoded token payload:', user); // Log decoded payload
       req.user = user as JwtPayload;
       return next();
-    });
+  });
   } else {
     res.sendStatus(401); // Unauthorized
   }
