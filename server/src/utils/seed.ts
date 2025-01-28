@@ -1,3 +1,4 @@
+import bcrypt from 'bcryptjs';
 import { User } from '../models/index.js';
 import db from '../config/connection.js';
 
@@ -11,7 +12,7 @@ const seedDatabase = async (): Promise<void> => {
         await User.deleteMany({});
         console.log('Cleared existing User data.');
 
-        // Create seed data
+        // Create seed data with hashed passwords
         const seedUsers = [
             {
                 username: 'admin',
@@ -24,6 +25,12 @@ const seedDatabase = async (): Promise<void> => {
                 password: 'testPassword',
             },
         ];
+
+        // Hash the passwords before inserting into the database
+        for (const user of seedUsers) {
+            const salt = await bcrypt.genSalt(10);
+            user.password = await bcrypt.hash(user.password, salt);
+        }
 
         // Insert seed data into the database
         const insertedUsers = await User.insertMany(seedUsers);

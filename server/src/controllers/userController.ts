@@ -1,13 +1,24 @@
 import { Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
 import { User, Score } from '../models/index.js';
 
 // Create a new user
 export const createUser = async (req: Request, res: Response) => {
     try {
         const { username, password, email } = req.body;
-        const user = new User({ username, password, email });
+
+        // Hash the password before saving it
+        const hashedPassword = await bcrypt.hash(password, 10); // 10 is the salt rounds
+
+        const user = new User({ username, password: hashedPassword, email });
         const savedUser = await user.save();
-        res.status(201).json(savedUser);
+        const token = jwt.sign(
+            { userId: savedUser.id, username: savedUser.username },
+            process.env.JWT_SECRET_KEY!, // Ensure JWT_SECRET_KEY is defined
+            { expiresIn: '1h' } // Set token expiration as needed
+        );
+        res.status(201).json({user: savedUser, token});
     } catch (error) {
         res.status(500).json({ error: 'Error creating user' });
     }

@@ -1,34 +1,39 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
-import { User } from '../models/index.js'; // Assuming you have a User model
-import { signToken } from '../utils/auth.js'; // Import the signToken function
+import jwt from 'jsonwebtoken';
+import User from '../models/userModel.js';
+import dotenv from 'dotenv';
+dotenv.config();
+
 
 export const login = async (req: Request, res: Response) => {
-    try {
-        const { username, password } = req.body;
+  const { username, password } = req.body;
 
-        // Find user by username
-        const user = await User.findOne({ username });
-        // check if user exists
-        if (!user) {
-            res.status(401).json({ error: 'Invalid username or password' });
-            return;
-        }
+  try {
+    // Find user by username
+    const user = await User.findOne({ username });
 
-        // Compare password
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-            res.status(401).json({ error: 'Invalid username or password' });
-            return;
-        }
-
-        // Generate JWT token
-        const token = signToken(user.username, user.email, user._id);
-
-        // Send token to the client
-        res.status(200).json({ token });
-    } catch (error) {
-        console.error('Login error:', error);
-        res.status(500).json({ error: 'Server error' });
+    // If the user is not found
+    if (!user) {
+      console.log('User not found: ', username);
+      return res.status(401).json({ message: 'Authentication failed at username' });
     }
+
+    // Compare password
+    const passwordIsValid = await bcrypt.compare(password, user.password);
+    if (!passwordIsValid) {
+      console.log('Invalid password for user: ', username);
+      return res.status(401).json({ message: 'Authentication failed at password' });
+    }
+
+    // Create JWT token
+    const secretKey = process.env.JWT_SECRET_KEY || '';
+    const token = jwt.sign({ username }, secretKey, { expiresIn: '1h' });
+
+    // Send response with the token
+    return res.json({ token });
+  } catch (error) {
+    console.error('Error during login: ', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
 };
