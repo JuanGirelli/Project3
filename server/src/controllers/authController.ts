@@ -5,35 +5,44 @@ import User from '../models/userModel.js';
 import dotenv from 'dotenv';
 dotenv.config();
 
-
 export const login = async (req: Request, res: Response) => {
   const { username, password } = req.body;
 
   try {
+    // Validate request payload
+    if (!username || !password) {
+      return res.status(400).json({ message: 'Username and password are required' });
+    }
+
     // Find user by username
     const user = await User.findOne({ username });
-
-    // If the user is not found
     if (!user) {
-      console.log('User not found: ', username);
-      return res.status(401).json({ message: 'Authentication failed at username' });
+      return res.status(401).json({ message: 'Authentication failed' });
     }
 
     // Compare password
     const passwordIsValid = await bcrypt.compare(password, user.password);
     if (!passwordIsValid) {
-      console.log('Invalid password for user: ', username);
-      return res.status(401).json({ message: 'Authentication failed at password' });
+      return res.status(401).json({ message: 'Authentication failed' });
+    }
+
+    // Verify the JWT secret key
+    const secretKey = process.env.JWT_SECRET_KEY;
+    if (!secretKey) {
+      throw new Error('JWT_SECRET_KEY is not defined in the environment variables');
     }
 
     // Create JWT token
-    const secretKey = process.env.JWT_SECRET_KEY || '';
-    const token = jwt.sign({ username }, secretKey, { expiresIn: '1h' });
+    const token = jwt.sign({ userId: user._id, username: user.username }, secretKey, { expiresIn: '1h' });
 
     // Send response with the token
-    return res.json({ token });
+    return res.status(200).json({ token });
   } catch (error) {
-    console.error('Error during login: ', error);
+    if (error instanceof Error) {
+      console.error('Error during login:', error.message);
+    } else {
+      console.error('Error during login:', error);
+    }
     return res.status(500).json({ message: 'Internal server error' });
   }
 };

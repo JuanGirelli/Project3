@@ -9,25 +9,28 @@ export const login = async (userInfo: UserLogin) => {
     const response = await fetch(`${API_URL}/auth/login`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
-      }, 
-      body: JSON.stringify(userInfo)
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userInfo),
     });
+
+    console.log('Response: ', response);
+
+    if (!response.ok) {
+      console.error(`Error: ${response.status} ${response.statusText}`);
+      throw new Error('User information not retrieved, check network tab!');
+    }
 
     const data = await response.json();
     console.log('User data: ', data.token);
     localStorage.setItem('id_token', data.token);
-    //window.location.assign('/'); refresh page
-    if(!response.ok) {
-      throw new Error('User information not retrieved, check network tab!');
-    }
-
     return data;
-  } catch(err) {
+  } catch (err) {
     console.log('Error from user login: ', err);
     return Promise.reject('Could not fetch user info');
   }
-}
+};
+
 
 // Register user
 export const registerUser = async (userData: { username: string; email: string; password: string }) => {
