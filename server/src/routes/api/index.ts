@@ -1,8 +1,7 @@
 import { Router } from 'express';
 import { userRoutes } from './userRoutes.js';
 import { scoreRoutes } from './scoreRoutes.js';
-
-import { authRoutes } from './authRoutes.js';
+import  authRoutes  from '../authRoutes.js';
 import { triviaRoutes } from './triviaRoutes.js';
 
 import { authenticateToken } from '../../middleware/auth.js'; 
