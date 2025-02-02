@@ -3,11 +3,15 @@
 ## Description
 Project3 is a full-stack MERN application designed to provide a seamless and modern user experience for managing and retrieving data through an interactive web interface. Leveraging React for the front-end, Express.js and GraphQL for the backend, and MongoDB for database management, this project uses a Trivia API to load quiz questions and keeps track of the highest score of the user.
 
-![Home Page Screenshot](https://drive.google.com/uc?export=view&id=1IzuGb3cAyuwLj3wCghHgUeQuK5sHPpAk)
+![Welcome Page Screenshot](https://drive.google.com/uc?export=view&id=1IzuGb3cAyuwLj3wCghHgUeQuK5sHPpAk)
 
-![Quiz Page Screenshot](./assets/QuizPage.png)
+![Register Page Screenshot](https://drive.google.com/uc?export=view&id=155oPkQt2RaNtXH_NpEw9zoJJZSSxRGrP)
 
-![Scoreboard Page Screenshot](./assets/ScoreboardPage.png)
+![Login Page Screenshot](https://drive.google.com/uc?export=view&id=1YW9k8otvQQuuYbrkNgh7kbQRj0f8dHRo)
+
+![Home Page Screenshot](https://drive.google.com/uc?export=view&id=1YW9k8otvQQuuYbrkNgh7kbQRj0f8dHRo)
+
+![Scores Page Screenshot](https://drive.google.com/uc?export=view&id=1YW9k8otvQQuuYbrkNgh7kbQRj0f8dHRo)
 
 ## **Table of Contents**
 - [Description](#description)
