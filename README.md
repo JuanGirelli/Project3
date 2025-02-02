@@ -9,9 +9,9 @@ Project3 is a full-stack MERN application designed to provide a seamless and mod
 
 ![Login Page Screenshot](https://drive.google.com/uc?export=view&id=1YW9k8otvQQuuYbrkNgh7kbQRj0f8dHRo)
 
-![Home Page Screenshot](https://drive.google.com/uc?export=view&id=1YW9k8otvQQuuYbrkNgh7kbQRj0f8dHRo)
+![Home Page Screenshot](https://drive.google.com/uc?export=view&id=1U57zwTx_5staQq4A82IQe47dFStturjy)
 
-![Scores Page Screenshot](https://drive.google.com/uc?export=view&id=1YW9k8otvQQuuYbrkNgh7kbQRj0f8dHRo)
+![Scores Page Screenshot](https://drive.google.com/uc?export=view&id=1ssQ3A1QeMDp7sqD5aF65NPkkfMNQt2q4)
 
 ## **Table of Contents**
 - [Description](#description)
